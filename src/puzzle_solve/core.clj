@@ -8,6 +8,8 @@
              [" " " " " " " " " "]
              ["X" "X" " " " " " "]])
 
+(def *move-num* 1)
+
 (defn won? [board]
   (not (some #{" "}
              (map #(some #{" "} %) board))))
@@ -43,3 +45,13 @@
         (= direction :left)  (fn [[x y]] [(dec x) y])
         (= direction :down)  (fn [[x y]] [x (inc y)])
         (= direction :up)    (fn [[x y]] [x (dec y)])))
+
+(defn do-move [board [x y direction]]
+  (let [next-move (get-move-fn direction)]
+    (loop [board board
+           pos [x y]
+           next-pos (next-move pos)]
+      (cond (in-bounds? next-pos) (recur (set-pos board pos *move-num*)
+                                         next-pos
+                                         (next-move next-pos))
+            (in-bounds? pos) (set-pos board pos head)))))
