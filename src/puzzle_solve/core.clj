@@ -26,12 +26,14 @@
   (assoc board y (assoc (get board y) x val)))
 
 (defn adj-squares [[x y]]
-  (->> [[(inc x) y]
-        [(dec x) y]
-        [x (inc y)]
-        [x (dec y)]]
-       (filter (fn [el] (and (not (some #(> % 4) el))
-                            (not (some neg? el)))))))
+  (->> [[(inc x) y :right]
+        [(dec x) y :left]
+        [x (inc y) :down]
+        [x (dec y) :up]]
+       (filter (fn [el] (and (not (some #(and (integer? %)
+                                              (> % 4)) el))
+                            (not (some #(and (integer? %)
+                                             (neg? %)) el)))))))
 
 (defn get-move-fn [direction]
   (cond (= direction :right) (fn [[x y]] [(inc x) y])
