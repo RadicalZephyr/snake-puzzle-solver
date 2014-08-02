@@ -8,16 +8,16 @@
              [" " " " " " " " " "]
              ["X" "X" " " " " " "]])
 
-(defn won? [puzzle]
+(defn won? [board]
   (not (some #{" "}
-             (map #(some #{" "} %) puzzle))))
+             (map #(some #{" "} %) board))))
 
-(defn get-head [puzzle]
+(defn get-head [board]
   (get (for [x (range 5)
              y (range 5)
-             :when (= head (get (get puzzle y) x))]
+             :when (= head (get (get board y) x))]
          [x y])
        0))
 
-(defn set [puzzle x y val]
-  (assoc puzzle y (assoc (get puzzle y) x val)))
+(defn set [board x y val]
+  (assoc board y (assoc (get board y) x val)))
