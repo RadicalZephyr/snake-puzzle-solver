@@ -8,7 +8,7 @@
              [" " " " " " " " " "]
              ["X" "X" " " " " " "]])
 
-(def ^:dynamic *move-num* 1)
+(def ^:dynamic *move-num* 0)
 
 (defn get-pos [board [x y]]
   (get (get board y) x))
