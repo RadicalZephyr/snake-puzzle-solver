@@ -25,15 +25,18 @@
 (defn set-pos [board [x y] val]
   (assoc board y (assoc (get board y) x val)))
 
+(defn in-bounds? [[x y]]
+  (and (>= x 0)
+       (< x 5)
+       (>= y 0)
+       (< y 5)))
+
 (defn adj-squares [[x y]]
   (->> [[(inc x) y :right]
         [(dec x) y :left]
         [x (inc y) :down]
         [x (dec y) :up]]
-       (filter (fn [el] (and (not (some #(and (integer? %)
-                                              (> % 4)) el))
-                            (not (some #(and (integer? %)
-                                             (neg? %)) el)))))))
+       (filter in-bounds?)))
 
 (defn get-move-fn [direction]
   (cond (= direction :right) (fn [[x y]] [(inc x) y])
