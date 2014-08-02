@@ -33,12 +33,12 @@
   (and (in-bounds? pos)
        (= " " (get-pos board pos))))
 
-(defn adj-squares [[x y]]
+(defn adj-squares [board [x y]]
   (->> [[(inc x) y :right]
         [(dec x) y :left]
         [x (inc y) :down]
         [x (dec y) :up]]
-       (filter in-bounds?)))
+       (filter (partial legal-move? board))))
 
 (defn solved? [board]
   (not (some #{" "}
@@ -47,7 +47,7 @@
 (defn stuck? [board]
   (let [head-pos (get-head board)]
     (some (complement (partial legal-move? board))
-          (adj-squares head-pos))))
+          (adj-squares board head-pos))))
 
 (defn get-move-fn [direction]
   (cond (= direction :right) (fn [[x y]] [(inc x) y])
