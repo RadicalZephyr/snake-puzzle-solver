@@ -73,3 +73,11 @@
                 (binding [*move-num* (inc *move-num*)]
                   (some solve (map (partial do-move board)
                                    (adj-squares board pos)))))))
+
+(defn -main [& args]
+  (clojure.pprint/pprint
+   (some identity
+         (for [x (range 5)
+               y (range 5)
+               :when (legal-move? puzzle [x y])]
+           (solve (set-pos puzzle [x y] head))))))
