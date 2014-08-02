@@ -26,6 +26,11 @@
          y (range 5)
          :when (= head (get-pos board [x y]))]
      [x y])))
+
+(defn stuck? [board]
+  (let [head-pos (get-head board)]
+    (some legal-move? (adj-squares head-pos))))
+
 (defn in-bounds? [[x y]]
   (and (>= x 0)
        (< x 5)
