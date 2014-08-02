@@ -10,7 +10,7 @@
 
 (def *move-num* 1)
 
-(defn won? [board]
+(defn solved? [board]
   (not (some #{" "}
              (map #(some #{" "} %) board))))
 
