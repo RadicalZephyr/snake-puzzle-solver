@@ -10,10 +10,6 @@
 
 (def *move-num* 1)
 
-(defn solved? [board]
-  (not (some #{" "}
-             (map #(some #{" "} %) board))))
-
 (defn get-pos [board [x y]]
   (get (get board y) x))
 
@@ -26,6 +22,10 @@
          y (range 5)
          :when (= head (get-pos board [x y]))]
      [x y])))
+
+(defn solved? [board]
+  (not (some #{" "}
+             (map #(some #{" "} %) board))))
 
 (defn stuck? [board]
   (let [head-pos (get-head board)]
