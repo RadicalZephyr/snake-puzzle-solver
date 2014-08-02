@@ -8,6 +8,9 @@
              [" " " " " " " " " "]
              ["X" "X" " " " " " "]])
 
+(def x-limit 5)
+(def y-limit 5)
+
 (def ^:dynamic *move-num* 0)
 
 (defn get-pos [board [x y]]
@@ -18,16 +21,16 @@
 
 (defn get-head [board]
   (first
-   (for [x (range 5)
-         y (range 5)
+   (for [x (range x-limit)
+         y (range y-limit)
          :when (= head (get-pos board [x y]))]
      [x y])))
 
 (defn in-bounds? [[x y]]
   (and (>= x 0)
-       (< x 5)
+       (< x x-limit)
        (>= y 0)
-       (< y 5)))
+       (< y y-limit)))
 
 (defn legal-move? [board pos]
   (and (in-bounds? pos)
@@ -77,7 +80,7 @@
 (defn -main [& args]
   (clojure.pprint/pprint
    (some identity
-         (for [x (range 5)
-               y (range 5)
+         (for [x (range x-limit)
+               y (range y-limit)
                :when (legal-move? puzzle [x y])]
            (solve (set-pos puzzle [x y] head))))))

@@ -16,7 +16,8 @@ To solve the built-in puzzle:
 If you want to solve a different puzzle, modify the `puzzle` var in
 `puzzle-solve.core`.
 
-If you want to solve a non-5x5 puzzle, then modify the magic numbers ;)
+If you want to solve a non-5x5 puzzle, then modify the `x-limit` and
+`y-limit` vars.
 
 
 ## License
