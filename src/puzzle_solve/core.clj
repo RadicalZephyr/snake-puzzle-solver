@@ -1,6 +1,11 @@
 (ns puzzle-solve.core)
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+(def puzzle [[" " " " "X" "X" "X"]
+             [" " " " " " " " " "]
+             [" " " " " " " " " "]
+             [" " " " " " " " " "]
+             ["X" "X" " " " " " "]])
+
+(defn won? [puzzle]
+  (not (some #{" "}
+             (map #(some #{" "} %) puzzle))))
