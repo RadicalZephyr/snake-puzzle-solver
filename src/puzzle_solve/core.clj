@@ -21,3 +21,11 @@
 
 (defn set-pos [board [x y] val]
   (assoc board y (assoc (get board y) x val)))
+
+(defn adj-squares [[x y]]
+  (->> [[(inc x) y]
+        [(dec x) y]
+        [x (inc y)]
+        [x (dec y)]]
+       (filter (fn [el] (and (not (some #(> % 4) el))
+                            (not (some neg? el)))))))
