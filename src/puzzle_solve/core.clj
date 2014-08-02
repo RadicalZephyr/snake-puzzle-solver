@@ -57,7 +57,7 @@
 
 (defn do-move [board [x y direction]]
   (let [next-move (get-move-fn direction)]
-    (loop [board board
+    (loop [board (set-pos board (get-head board) *move-num*)
            pos [x y]
            next-pos (next-move pos)]
       (cond (and (legal-move? board next-pos)
