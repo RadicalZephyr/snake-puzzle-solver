@@ -65,3 +65,11 @@
                                                  next-pos
                                                  (next-move next-pos))
             (legal-move? board pos) (set-pos board pos head)))))
+
+(defn solve [board]
+  (cond (solved? board) board
+        (stuck? board) nil
+        :else (let [pos (get-head board)]
+                (binding [*move-num* (inc *move-num*)]
+                  (some solve (map (partial do-move board)
+                                   (adj-squares board pos)))))))
