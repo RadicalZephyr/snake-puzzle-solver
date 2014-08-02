@@ -18,3 +18,6 @@
              :when (= head (get (get puzzle y) x))]
          [x y])
        0))
+
+(defn set [puzzle x y val]
+  (assoc puzzle y (assoc (get puzzle y) x val)))
