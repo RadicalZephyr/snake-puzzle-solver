@@ -64,7 +64,7 @@
                  (legal-move? board pos)) (recur (set-pos board pos *move-num*)
                                                  next-pos
                                                  (next-move next-pos))
-            (legal-move? board pos) (set-pos board pos head)))))
+                 (legal-move? board pos) (set-pos board pos head)))))
 
 (defn solve [board]
   (cond (solved? board) board
