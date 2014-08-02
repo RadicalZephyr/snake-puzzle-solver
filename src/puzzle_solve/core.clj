@@ -32,3 +32,9 @@
         [x (dec y)]]
        (filter (fn [el] (and (not (some #(> % 4) el))
                             (not (some neg? el)))))))
+
+(defn get-move-fn [direction]
+  (cond (= direction :right) (fn [[x y]] [(inc x) y])
+        (= direction :left)  (fn [[x y]] [(dec x) y])
+        (= direction :down)  (fn [[x y]] [x (inc y)])
+        (= direction :up)    (fn [[x y]] [x (dec y)])))
