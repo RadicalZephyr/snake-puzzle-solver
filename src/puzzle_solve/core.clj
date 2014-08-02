@@ -19,6 +19,9 @@
          [x y])
        0))
 
+(defn get-pos [board [x y]]
+  (get (get board y) x))
+
 (defn set-pos [board [x y] val]
   (assoc board y (assoc (get board y) x val)))
 
