@@ -55,7 +55,7 @@
     (loop [board board
            pos [x y]
            next-pos (next-move pos)]
-      (cond (in-bounds? next-pos) (recur (set-pos board pos *move-num*)
-                                         next-pos
-                                         (next-move next-pos))
-            (in-bounds? pos) (set-pos board pos head)))))
+      (cond (legal-move? board next-pos) (recur (set-pos board pos *move-num*)
+                                                next-pos
+                                                (next-move next-pos))
+            (legal-move? board pos) (set-pos board pos head)))))
