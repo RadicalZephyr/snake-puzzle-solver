@@ -33,6 +33,10 @@
        (>= y 0)
        (< y 5)))
 
+(defn legal-move? [board pos]
+  (and (in-bounds? pos)
+       (= " " (get-pos board pos))))
+
 (defn adj-squares [[x y]]
   (->> [[(inc x) y :right]
         [(dec x) y :left]
