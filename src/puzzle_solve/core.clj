@@ -23,14 +23,6 @@
          :when (= head (get-pos board [x y]))]
      [x y])))
 
-(defn solved? [board]
-  (not (some #{" "}
-             (map #(some #{" "} %) board))))
-
-(defn stuck? [board]
-  (let [head-pos (get-head board)]
-    (some legal-move? (adj-squares head-pos))))
-
 (defn in-bounds? [[x y]]
   (and (>= x 0)
        (< x 5)
@@ -47,6 +39,15 @@
         [x (inc y) :down]
         [x (dec y) :up]]
        (filter in-bounds?)))
+
+(defn solved? [board]
+  (not (some #{" "}
+             (map #(some #{" "} %) board))))
+
+(defn stuck? [board]
+  (let [head-pos (get-head board)]
+    (some (complement (partial legal-move? board))
+          (adj-squares head-pos))))
 
 (defn get-move-fn [direction]
   (cond (= direction :right) (fn [[x y]] [(inc x) y])
