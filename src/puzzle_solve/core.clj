@@ -87,9 +87,8 @@
   "Check if the board is in a \"stuck\" position: where there are no
   legal moves, but the whole board hasn't been solved."
   [board]
-  (let [head-pos (get-head board)]
-    (some (complement (partial legal-move? board))
-          (adj-squares board head-pos))))
+  (and (not (solved? board))
+       (some identity (adj-squares board (get-head board)))))
 
 (defn get-move-fn
   "Return a function that will return the appropriate next square for
