@@ -8,9 +8,6 @@
              [" " " " " " " " " "]
              ["X" "X" " " " " " "]])
 
-(def x-limit 5)
-(def y-limit 5)
-
 (def ^:dynamic *move-num* 0)
 
 (defn get-pos [board [x y]]
@@ -21,19 +18,22 @@
 
 (defn get-head [board]
   (first
-   (for [x (range x-limit)
-         y (range y-limit)
+   (for [x (range (count (get board 0)))
+         y (range (count board))
          :when (= head (get-pos board [x y]))]
      [x y])))
 
-(defn in-bounds? [[x y]]
+(defn get-board-size [board]
+  [(count (get board 0)) (count board)])
+
+(defn in-bounds? [board [x y]]
   (and (>= x 0)
-       (< x x-limit)
+       (< x (count (get board 0)))
        (>= y 0)
-       (< y y-limit)))
+       (< y (count board))))
 
 (defn legal-move? [board pos]
-  (and (in-bounds? pos)
+  (and (in-bounds? board pos)
        (= " " (get-pos board pos))))
 
 (defn adj-squares [board [x y]]
@@ -77,10 +77,13 @@
                   (some solve (map (partial do-move board)
                                    (adj-squares board pos)))))))
 
+(defn try-all [board]
+  (let [[x-limit y-limit] (get-board-size board)]
+    (for [x (range x-limit)
+          y (range y-limit)
+          :when (legal-move? puzzle [x y])]
+      (solve (set-pos puzzle [x y] head)))))
+
 (defn -main [& args]
   (clojure.pprint/pprint
-   (some identity
-         (for [x (range x-limit)
-               y (range y-limit)
-               :when (legal-move? puzzle [x y])]
-           (solve (set-pos puzzle [x y] head))))))
+   (some identity (try-all puzzle))))
