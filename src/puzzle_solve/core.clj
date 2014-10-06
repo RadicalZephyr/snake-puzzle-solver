@@ -16,21 +16,27 @@
 (defn set-pos [board [x y] val]
   (assoc board y (assoc (get board y) x val)))
 
+(defn x-limit [board]
+  (count (get board 0)))
+
+(defn y-limit [board]
+  (count board))
+
 (defn get-head [board]
   (first
-   (for [x (range (count (get board 0)))
-         y (range (count board))
+   (for [x (range (x-limit board))
+         y (range (y-limit board))
          :when (= head (get-pos board [x y]))]
      [x y])))
 
 (defn get-board-size [board]
-  [(count (get board 0)) (count board)])
+  [(x-limit board) (y-limit board)])
 
 (defn in-bounds? [board [x y]]
   (and (>= x 0)
-       (< x (count (get board 0)))
+       (< x (x-limit board))
        (>= y 0)
-       (< y (count board))))
+       (< y (y-limit board))))
 
 (defn legal-move? [board pos]
   (and (in-bounds? board pos)
